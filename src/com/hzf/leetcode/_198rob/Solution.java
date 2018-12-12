@@ -46,24 +46,21 @@ public class Solution {
      * 动态规划
      */
     private int rob(int[] nums) {
+        if (nums.length == 0) return 0;
+        money = new HashMap<>();
         return maxMoney(nums, nums.length - 1);
     }
 
-    private Map<Integer, Integer> money = new HashMap<>();
+    private Map<Integer, Integer> money;
 
     private int maxMoney(int[] nums, int index) {
         if (money.containsKey(index)) return money.get(index);
-        if (nums.length == 0) return 0;
         if (index == 0) return nums[0];
         if (index == -1) return 0;
         int max = Math.max(nums[index] + maxMoney(nums, index - 2), maxMoney(nums, index - 1));
         money.put(index, max);
         return max;
     }
-
-
-
-
 
 
 }
