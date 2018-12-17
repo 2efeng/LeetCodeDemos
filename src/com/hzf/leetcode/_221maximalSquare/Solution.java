@@ -25,23 +25,20 @@ public class Solution {
         System.out.println(new Solution().maximalSquare(matrix));
     }
 
-    public int maximalSquare(char[][] matrix) {
+    private int maximalSquare(char[][] matrix) {
         if (matrix == null || matrix.length == 0) return 0;
-        cache = new int[matrix.length][matrix[0].length];
-        int res = square(matrix, 0, 0) - '0';
+        int res = square(matrix, matrix.length - 1, matrix[0].length - 1) - '0';
         return res * res;
     }
 
-    private int[][] cache;
 
     private int square(char[][] matrix, int x, int y) {
-        if (cache[x][y] != 0) return cache[x][y];
-        if (x == matrix.length - 1 || y == matrix[0].length - 1) cache[x][y] = matrix[x][y];
-        else {
-            int temp = Math.min(square(matrix, x, y + 1), square(matrix, x + 1, y));
-            cache[x][y] = Math.min(temp, square(matrix, x + 1, y + 1)) + cache[x][y];
+        if (x == 0 || y == 0) return matrix[x][y];
+        if (matrix[x][y] == '0') {
+            return square(matrix, x - 1, y - 1);
         }
-        return cache[x][y];
+        int temp = Math.min(square(matrix, x, y - 1), square(matrix, x - 1, y));
+        return Math.min(temp, square(matrix, x - 1, y - 1)) + matrix[x][y];
     }
 
 

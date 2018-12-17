@@ -1,8 +1,5 @@
 package com.hzf.leetcode._198rob;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by zf.huang on 2018.12.3
  * <p>
@@ -25,7 +22,7 @@ public class Solution {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int[] nums = {1, 2, 3, 1};
+        int[] nums = {2, 7, 9, 3, 1};
         System.out.println(solution.rob(nums));
     }
 
@@ -47,19 +44,18 @@ public class Solution {
      */
     private int rob(int[] nums) {
         if (nums.length == 0) return 0;
-        money = new HashMap<>();
+        money = new int[nums.length];
         return maxMoney(nums, nums.length - 1);
     }
 
-    private Map<Integer, Integer> money;
+    private int money[];
 
     private int maxMoney(int[] nums, int index) {
-        if (money.containsKey(index)) return money.get(index);
-        if (index == 0) return nums[0];
         if (index == -1) return 0;
-        int max = Math.max(nums[index] + maxMoney(nums, index - 2), maxMoney(nums, index - 1));
-        money.put(index, max);
-        return max;
+        if (money[index] != 0) return money[index];
+        if (index == 0) return nums[0];
+        money[index] = Math.max(nums[index] + maxMoney(nums, index - 2), maxMoney(nums, index - 1));
+        return money[index];
     }
 
 

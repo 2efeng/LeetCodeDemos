@@ -6,8 +6,14 @@ import java.util.List;
 
 /**
  * Created by zf.huang on 2018.12.3
+ *
+ *
  */
 public class Solution {
+
+    public static void main(String[] args) {
+
+    }
 
     public List<Integer> getRow(int rowIndex) {
         List<List<Integer>> triangle = new ArrayList<>();
@@ -23,4 +29,5 @@ public class Solution {
         }
         return triangle.get(rowIndex);
     }
+
 }

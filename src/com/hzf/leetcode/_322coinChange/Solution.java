@@ -19,44 +19,51 @@ package com.hzf.leetcode._322coinChange;
 public class Solution {
 
     public static void main(String[] args) {
-        int[] coins = {1, 5, 2};
-        int amount = 11;
+        int[] coins = {346, 29, 395, 188, 155, 109};
+        int amount = 9401;
         System.out.println(new Solution().coinChange(coins, amount));
     }
 
-    //    private int coinChange(int[] coins, int amount) {
-//        int res = change(coins, amount, 0);
-//        if (res < maxValue) return res;
-//        else return -1;
-//    }
-    private int coinChange(int[] coins, int amount) {
-        if (amount == 0) return 0;
-        int[] ans = new int[amount + 1];
-        for (int coin : coins) {
-            if (coin > amount) continue;
-            ans[coin] = 1;
-        }
-        for (int i = 1; i <= amount; ++i) {
-            if (ans[i] != 0) continue;
-            int min = Integer.MAX_VALUE;
-            for (int coin : coins) {
-                if (i - coin <= 0 || ans[i - coin] == 0) continue;
-                min = Math.min(min, ans[i - coin] + 1);
-            }
-            min = min == Integer.MAX_VALUE ? 0 : min;
-            ans[i] = min;
-        }
-        return ans[amount] == 0 ? -1 : ans[amount];
-    }
+    private final int maxValue = 100000000;
 
-    private int maxValue = 6666666;
+    private int[][] cache;
+
+    private int coinChange(int[] coins, int amount) {
+        cache = new int[amount + 1][coins.length];
+        int res = change(coins, amount, 0);
+        if (res < maxValue) return res;
+        else return -1;
+    }
 
     private int change(int[] coins, int amount, int index) {
-        if (amount == 0) return 0;
         if (amount < 0 || index >= coins.length) return maxValue;
+        if (cache[amount][index] != 0) return cache[amount][index];
+        if (amount == 0) return 0;
         int a = change(coins, amount - coins[index], index) + 1;
         int b = change(coins, amount, index + 1);
-        return Math.min(a + 1, b);
+        cache[amount][index] = Math.min(a, b);
+        return cache[amount][index];
     }
+
+
+//    private int coinChange(int[] coins, int amount) {
+//        if (amount == 0) return 0;
+//        int[] ans = new int[amount + 1];
+//        for (int coin : coins) {
+//            if (coin > amount) continue;
+//            ans[coin] = 1;
+//        }
+//        for (int i = 1; i <= amount; ++i) {
+//            if (ans[i] != 0) continue;
+//            int min = Integer.MAX_VALUE;
+//            for (int coin : coins) {
+//                if (i - coin <= 0 || ans[i - coin] == 0) continue;
+//                min = Math.min(min, ans[i - coin] + 1);
+//            }
+//            min = min == Integer.MAX_VALUE ? 0 : min;
+//            ans[i] = min;
+//        }
+//        return ans[amount] == 0 ? -1 : ans[amount];
+//    }
 
 }
